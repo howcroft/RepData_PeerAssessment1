@@ -79,9 +79,24 @@ dim(data)[1] - dim(dataNAsRemoved)[1]
 Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
-Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
 ```{r third_question_second_part}
+# Get mean steps and index them, based on interval averages, for subsitution in dataset
+indexesForLookup <- match(data[is.na(data$steps), "interval"], answer$interval)
+# Substitute NAs with mean for respective interval mean
+data[is.na(data$steps), "steps"] <- answer[indexesForLookup, 2]
+#any(is.na(data$steps))
+
+```
+
+Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
+
+Reply: Yes it does, it will skew the data in terms of frequency (went up from 15 to 25 on the y axis) compared to the first histogram. This is especially due to the fact that days that had no data (such as the 1st) now have the mean data. The distribution itself is not affected on horizontal (x) axis.
+
+```{r third_question_histogram}
+answer <- summarise_each(group_by(data, date), funs(mean, median))
+answer <- as.data.frame(answer)
+hist(answer[,2], main="Total Steps", xlab = "Total Steps per day", col = "red")
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
@@ -93,7 +108,14 @@ Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minut
 
 
 ```{r fourth_question}
-
+weekendTestAbb <- c("Sat", "Sun")
+data$weekend <- weekdays(as.POSIXct(data$date), abbreviate = TRUE) %in% weekendTestAbb
+data$weekday <- !data$weekend
+averages <- as.data.frame(summarise_each(group_by(data[data$weekend,], interval), funs(mean)))
+averages2 <- as.data.frame(summarise_each(group_by(data[data$weekday,], interval), funs(mean)))
+par(mfrow = c(2,1))
+plot(averages$interval, averages$steps, type = "l", main="Weekend", xlab="Interval", ylab="Steps")
+plot(averages2$interval, averages2$steps, type = "l", main="Weekdays", xlab="Interval", ylab="Steps")
 ```
 
 
