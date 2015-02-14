@@ -1,11 +1,6 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-author: "António Howcroft Ferreira"
-date: "Saturday, February 14, 2015"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
+AntÃ³nio Howcroft Ferreira  
+Saturday, February 14, 2015  
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
@@ -18,7 +13,8 @@ When you click the **Knit** button a document will be generated that includes bo
 <!--- 
 setwd("C:/Users/ahf/Desktop/lectures_etc/coursera/jhopkins/represearch/assignment1/RepData_PeerAssessment1")
 -->
-```{r LOAD_DATA}
+
+```r
 zipfile <- "activity.zip"
 datafile <- "activity.csv"
 unzip(zipfile, overwrite = TRUE, exdir = ".", unzip = "internal")
@@ -32,35 +28,29 @@ rm(zipfile)
 
 
 ## What is mean total number of steps taken per day?
-```{r first_question, message=FALSE}
+
+```r
 library(dplyr)
 #all data even ones with no data (like 2012-10-01)
-answer <- summarise_each(group_by(data, date), funs(mean(., na.rm=TRUE)))
-answer
-#Data could be sanitized to only show meaningful means
+#answer <- summarise_each(group_by(data, date), funs(mean(., na.rm=TRUE)))
+#answer
+#Data sanitized to only show meaningful means
 #dataNAsRemoved <- data[complete.cases(data),]
 #answer <- summarise_each(group_by(dataNAsRemoved, date), funs(mean(., na.rm=TRUE)))
 #answer
-
 ```
 
 
 ## What is the average daily activity pattern?
 
-```{r second_question}
 
-```
 
 ## Imputing missing values
-```{r third_question}
 
-```
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
-```{r fourth_question}
 
-```
 
 
 
@@ -69,6 +59,5 @@ answer
 Clean up Routines.
 This is the only part where the assignment rule of echo=true is broken. Please forgive me ;)
 -->
-```{r CLEANUP, echo=FALSE, results='hide', message=FALSE}
-if (file.exists(datafile)) file.remove(datafile)
-```{r}
+
+
