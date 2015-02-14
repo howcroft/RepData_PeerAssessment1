@@ -1,13 +1,29 @@
 ---
 title: "Reproducible Research: Peer Assessment 1"
+author: "António Howcroft Ferreira"
+date: "Saturday, February 14, 2015"
 output: 
   html_document:
     keep_md: true
 ---
 
+<!--- 
+setwd("C:/Users/ahf/Desktop/lectures_etc/coursera/jhopkins/represearch/assignment1/RepData_PeerAssessment1")
+-->
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+
 
 ## Loading and preprocessing the data
 
+Show any code that is needed to
+
+Load the data (i.e. read.csv())
+
+Process/transform the data (if necessary) into a format suitable for your analysis
 
 
 ## What is mean total number of steps taken per day?
