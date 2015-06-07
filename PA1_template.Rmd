@@ -19,7 +19,7 @@ When you click the **Knit** button a document will be generated that includes bo
 setwd("C:/Users/ahf/Desktop/lectures_etc/coursera/jhopkins/represearch/assignment1/RepData_PeerAssessment1")
 -->
 ```{r LOAD_DATA}
-zipfile <- "activity.zip"
+zipfile <- "repdata-data-activity.zip"
 datafile <- "activity.csv"
 unzip(zipfile, overwrite = TRUE, exdir = ".", unzip = "internal")
 data <- read.csv(datafile)
@@ -36,16 +36,21 @@ rm(zipfile)
 ```{r first_question, message=FALSE}
 library(dplyr)
 #Some days are present but have no data (e.g. 2012-10-01 for steps data)
-dataNAsRemoved$date <- as.POSIXct(dataNAsRemoved$date)
-answer <- summarise_each(group_by(dataNAsRemoved, date), funs(mean, median))
-answer <- as.data.frame(answer)[c(1,2,3)]
 # as.POSIXct Necessary for knittr limitation
+dataNAsRemoved$date <- as.POSIXct(dataNAsRemoved$date)
+answer <- summarise_each(group_by(dataNAsRemoved, date), funs(sum));
+answer <- as.data.frame(answer);
 hist(answer[,2], main="Total Steps", xlab = "Total Steps per day", col = "red")
 
 ```
+
 2. Calculate and report the mean and median of the total number of steps taken per day
+
 ```{r}
-answer[, c(1,2)]
+meanStepsAllDays <- mean(answer[, 2])
+medianStepsAllDays <- median(answer[, 2])
+sprintf("The mean and median number of steps taken each day are %f and %d, respectively", meanStepsAllDays, medianStepsAllDays)
+
 ```
 
 ## What is the average daily activity pattern?
@@ -94,7 +99,7 @@ Make a histogram of the total number of steps taken each day and Calculate and r
 Reply: Yes it does, it will skew the data in terms of frequency (went up from 15 to 25 on the y axis) compared to the first histogram. This is especially due to the fact that days that had no data (such as the 1st) now have the mean data. The distribution itself is not affected on horizontal (x) axis.
 
 ```{r third_question_histogram}
-answer <- summarise_each(group_by(data, date), funs(mean, median))
+answer <- summarise_each(group_by(data, date), funs(sum))
 answer <- as.data.frame(answer)
 hist(answer[,2], main="Total Steps", xlab = "Total Steps per day", col = "red")
 ```
